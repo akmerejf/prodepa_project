@@ -1,0 +1,52 @@
+<div class="container">
+<p *ngIf="mensagem.length" class="alert alert-info">{{mensagem}}</p>
+<h1 class="text-center">{{material.title}}</h1><!-- novidade aqui -->
+    <form [formGroup]="meuForm" class="row" (submit)="cadastrar($event)">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Nome</label>
+                <input formControlName="nome" name="nome" [(ngModel)]="material.title" class="form-control"  autocomplete="off">    
+                <div *ngIf="meuForm.controls.nome.invalid" >
+                    <span *ngIf="meuForm.controls.nome.errors.required" class="form-control alert-danger">
+                        Nome obrigatório
+                    </span>
+                    <span *ngIf="meuForm.controls.nome.errors.minlength" class="form-control alert-danger">
+                        Nome deve ter no minimo 4 caracteres
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Código</label>
+                <input formControlName="codigo" name="codigo" [(ngModel)]="material.code" class="form-control"  autocomplete="off" >
+                <span *ngIf="meuForm.controls.codigo.invalid" class="form-control alert-danger">
+                    Código obrigatório
+                </span>
+            </div>
+            <div class="form-group">
+                <label>Preço</label>
+                <input formControlName="preco" name="preco" [(ngModel)]="material.preco" class="form-control"  autocomplete="off">
+                <span *ngIf="meuForm.controls.preco.invalid" class="form-control alert-danger">
+                    Preço obrigatório
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label>Data de Cadastro</label>
+                <input formControlName="cad_data" name="cad_data" [(ngModel)]="material.cad_data" class="form-control"  autocomplete="off" placeholder="Ex: dd/mm/aaaa">
+                <span *ngIf="meuForm.controls.cad_data.invalid" class="form-control alert-danger">
+                    Data de Cadastro obrigatório
+                </span>
+            </div>
+
+            <botao nome="Enviar" tipo="submit" estilo="btn-primary" [desabilitado]="meuForm.invalid">
+            </botao>
+             <a [routerLink]="['']" class="btn btn-primary">Voltar</a>
+            <hr>
+        </div>
+
+        <div class="col-md-6">
+            <material title="{{material.title}}" code="{{material.code}}" preco="{{material.preco}}" cad_data="{{material.cad_data}}">
+            </material>
+        </div>
+    </form>
+</div>

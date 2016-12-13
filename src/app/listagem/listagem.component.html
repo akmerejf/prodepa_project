@@ -1,0 +1,36 @@
+<div class="jumbotron">
+    <h1 class="text-center">Materiais</h1>
+</div>
+<div class="container">
+    <p *ngIf="mensagem.length" class="alert alert-info">{{mensagem}}</p>
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+                 <div class="input-group">
+                    <span class="input-group-btn">
+                         
+                        <a [routerLink]="['/cadastro']" class="btn btn-primary">
+                            Novo Material
+                        </a>
+                        
+                    </span>
+                    <input class="form-control" #textoProcurado (keyup)="0"  
+                        placeholder="filtrar pelo título do material">
+                </div> 
+            </form>
+        </div> <!-- fim col-md-12 -->
+    </div> <!-- fim row -->
+    <br>
+
+    <div class="row">
+        <painel #painel *ngFor="let material of materiais | filtroPorTitulo: textoProcurado.value" titulo="{{material.title | uppercase}}" class="col-md-4">
+
+            <material title="{{material.title}}" code="{{material.code}}" preco="{{material.preco}}" cad_data="{{material.cad_data}}">
+            </material>
+            <botao nome="Editar" [routerLink]="['/cadastro', material.id]" estilo="btn-primary btn-block" ></botao>
+            <botao nome="Remover" [confirmacao]="true" estilo="btn-danger btn-block" (acao)="remover(material, painel)">
+            </botao>
+            
+        </painel>
+    </div><!-- fim row -->
+</div>
