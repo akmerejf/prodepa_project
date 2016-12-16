@@ -11,13 +11,12 @@ import { ListagemComponent } from './listagem/listagem.component';
 import { PainelModule } from './painel/painel.module';
 import {routing} from './app.routes';
 import {BotaoModule} from './botao/botao.module';
-import { TabelaComponent } from './tabela/tabela.component';
+import { TabelaModule } from './tabela/tabela.module';
 @NgModule({
   declarations: [
     AppComponent,
     CadastroComponent,
-    ListagemComponent,
-    TabelaComponent
+    ListagemComponent
   ],
   imports: [
     AlertModule,
@@ -28,7 +27,8 @@ import { TabelaComponent } from './tabela/tabela.component';
     PainelModule,
     ReactiveFormsModule,
     routing,
-    BotaoModule
+    BotaoModule,
+    TabelaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

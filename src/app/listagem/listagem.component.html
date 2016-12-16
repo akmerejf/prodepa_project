@@ -21,16 +21,27 @@
         </div> <!-- fim col-md-12 -->
     </div> <!-- fim row -->
     <br>
-
-    <div class="row">
-        <painel #painel *ngFor="let material of materiais | filtroPorTitulo: textoProcurado.value" titulo="{{material.title | uppercase}}" class="col-md-4">
-
-            <material title="{{material.title}}" code="{{material.code}}" preco="{{material.preco}}" cad_data="{{material.cad_data}}">
-            </material>
-            <botao nome="Editar" [routerLink]="['/cadastro', material.id]" estilo="btn-primary btn-block" ></botao>
-            <botao nome="Remover" [confirmacao]="true" estilo="btn-danger btn-block" (acao)="remover(material, painel)">
-            </botao>
+    <form>
+        <div class="input-group">
             
-        </painel>
+            <input type="text" class="form-control"  #textoDigitado (keyup)="0" placeholder="filtrar pelo título do material">
+            <span class="input-group-btn">
+                <botao nome="Remover" estilo="btn-primary" (acao)="lista(textoDigitado.value)">
+                </botao>
+            </span>                        
+        </div>
+    </form>                        
+    <div class="row">
+        <tabela #tabela >
+            <tr *ngFor="let material of materiais | filtroPorTitulo: textoProcurado.value">
+                <td>{{material.title}}</td>
+                <td>{{material.code}}</td>
+                <td>{{material.preco}}</td>
+                <td>{{material.cad_data}}</td>
+                <td><botao nome="Editar" [routerLink]="['/cadastro', material.id]" estilo="btn-primary btn-sm" ></botao></td>
+                <td><botao nome="Remover" [confirmacao]="true" estilo="btn-danger btn-sm" (acao)="remover(material, tabela)">
+                </botao></td>
+            </tr>
+        </tabela>
     </div><!-- fim row -->
 </div>

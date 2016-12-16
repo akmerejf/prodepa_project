@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import {MaterialService} from '../material/material.service';
 import {MaterialComponent} from '../material/material.component';
-import {PainelComponent} from '../painel/painel.component';
+import {TabelaComponent} from '../tabela/tabela.component';
 
 @Component({
   selector: 'listagem',
@@ -14,34 +14,51 @@ export class ListagemComponent implements OnInit {
     title : string = 'Lista de Materiais';
   	materiais : MaterialComponent[] = [];
     service: MaterialService;
+    @Output() busca = new EventEmitter;
+    textoBusca: string= '';
 
   	constructor(service: MaterialService){
       this.service = service;
-  		this.service
-        .lista()
-        .subscribe(materiais => {
-          this.materiais = materiais
-          console.log(materiais);
-        }, erro => console.log(erro));
+      
   	}
 
   ngOnInit() {
+      this.service
+      .lista()
+      .subscribe(materiais => {
+        this.materiais = materiais
+        console.log(materiais);
+      }, erro => console.log(erro));
+    
+       
   }
 
-  remover(material: MaterialComponent, painel: PainelComponent){
+  lista(busca: string){
+    this.textoBusca = busca;
+    this.service
+        .buscaPorNome(busca)
+        .subscribe(materiais => {
+          
+          this.materiais = materiais
+         
+          console.log(materiais);
+        }, erro => console.log(erro));
+  }
+
+  remover(material: MaterialComponent){
  
       this.service
         .remove(material)
         .subscribe(
                 () => {
-                    painel.fadeOut(()=>{
+                   
                       console.log('Foto removida com sucesso');
                       let novosMateriais = this.materiais.slice(0);
                       let indice = novosMateriais.indexOf(material);
                       novosMateriais.splice(indice, 1);
                       this.materiais = novosMateriais;
                       this.mensagem = 'Material removido com sucesso';
-                    });
+                   
                 }, 
                 erro => {
                   console.log(erro);

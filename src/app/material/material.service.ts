@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, URLSearchParams } from '@angular/http';
 import { MaterialComponent } from './material.component';
 import { Observable } from 'rxjs';
 
@@ -10,6 +10,8 @@ export class MaterialService {
 	headers: Headers;
 	url: string = 'http://localhost:3000/materials'
   mensagem: string = '';
+  params = new URLSearchParams();
+
   constructor(http: Http) { 
   	this.http = http;
   	this.headers = new Headers();
@@ -48,7 +50,15 @@ export class MaterialService {
 
     }
 
+  buscaPorNome(title: string): Observable<MaterialComponent[]> {
+    this.params.set('title', title);
+    return this.http.get(this.url, { search: this.params })
+    .map(res => res.json());
+
+    }
   }
+
+
 
   export class MensagemCadastro {
 
